@@ -96,12 +96,23 @@ public class Coordinater_nav_activity extends AppCompatActivity
             android.support.v4.app.FragmentManager transaction =getSupportFragmentManager();
             transaction.beginTransaction().replace(R.id.coordinater_frame,new Support()).commit();
         }
+        else if (id == R.id.share) {
+            shareapp();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    public void shareapp() {
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+        sharingIntent.setType("text/plain");
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, "JSS Mythri 2017-18 android app.\nClick on link to download: " +
+                "https://drive.google.com/open?id=0Bx_9gnjjhWhxNXZMbEdCVWllaUk");
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Jss Mythri 2017-18");
+        startActivity(Intent.createChooser(sharingIntent, "Share using"));
+    }
     private void clearPref() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(LOGIN_KEY,false);

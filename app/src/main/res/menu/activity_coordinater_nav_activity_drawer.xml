@@ -34,5 +34,10 @@
             android:icon="@drawable/about"
             android:title="Support" />
 
+        <item
+            android:id="@+id/share"
+            android:icon="@drawable/ic_share_black_24dp"
+            android:title="Share" />
+
 </group>
 </menu>

@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         sharingIntent.putExtra(Intent.EXTRA_TEXT, "JSS Mythri 2017-18 android app.\nClick on link to download: " +
-                "https://play.google.com/store/apps/details?id=" + this.getPackageName());
+                "https://drive.google.com/open?id=0Bx_9gnjjhWhxNXZMbEdCVWllaUk");
         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Jss Mythri 2017-18");
         startActivity(Intent.createChooser(sharingIntent, "Share using"));
     }
