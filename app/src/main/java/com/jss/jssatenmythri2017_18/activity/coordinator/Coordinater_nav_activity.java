@@ -109,7 +109,7 @@ public class Coordinater_nav_activity extends AppCompatActivity
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
         sharingIntent.putExtra(Intent.EXTRA_TEXT, "JSS Mythri 2017-18 android app.\nClick on link to download: " +
-                "https://drive.google.com/open?id=0Bx_9gnjjhWhxNXZMbEdCVWllaUk");
+                "https://i.diawi.com/WpMHeq");
         sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "Jss Mythri 2017-18");
         startActivity(Intent.createChooser(sharingIntent, "Share using"));
     }
