@@ -29,9 +29,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
-            android:name="com.jss.jssatenmythri2017_18.activity.GamedetailActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name="com.jss.jssatenmythri2017_18.activity.RegisterActivity"
             android:label="Register"
             android:screenOrientation="portrait"
@@ -78,6 +75,9 @@
             android:name="com.jss.jssatenmythri2017_18.activity.admin.RegisterCoordinator"
             android:label="Registration"
             android:screenOrientation="portrait" />
+        <activity android:name=".activity.GamedetailActivity"
+            android:label="Game Detail"
+            android:screenOrientation="portrait"/>
 
         <activity
             android:name="com.jss.jssatenmythri2017_18.activity.admin.ViewAllFixtures"

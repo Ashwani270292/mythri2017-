@@ -15,6 +15,11 @@
             android:id="@+id/games"
             android:icon="@drawable/games"
             android:title="All Games" />
+
+        <item
+            android:id="@+id/committee"
+            android:icon="@drawable/games"
+            android:title="Committee" />
         <item
             android:id="@+id/notification"
             android:icon="@drawable/current"

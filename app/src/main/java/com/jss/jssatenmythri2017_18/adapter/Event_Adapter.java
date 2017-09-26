@@ -37,7 +37,7 @@ public class Event_Adapter extends RecyclerView.Adapter <Event_Adapter.Myholder>
     UserGames userGames;
  public static ArrayList<String> teammember;
     public static ArrayList<String> teammemberid;
-    String URL="http://104.197.97.19:3000/teammembers";
+    String URL="http://35.202.2.74:3000/teammembers";
     JSONObject jsonObject;
     JSONArray jsonArray;
     RecyclerView recyclerView;

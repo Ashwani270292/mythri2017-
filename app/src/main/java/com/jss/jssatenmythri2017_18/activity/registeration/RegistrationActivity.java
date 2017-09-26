@@ -355,7 +355,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     i.putExtra("gender",selected_gender);
                     i.putExtra("nos", 7);
                     startActivity(i);
-                } else if (seleccted_games.equals("Tug Of War") || (seleccted_games.equals("Football") && selected_gender.equals("Boy(s)"))) {
+                } else if (seleccted_games.equals("Tug Of War") || (seleccted_games.equals("Football"))) {
                     Intent i = new Intent(RegistrationActivity.this, F8Activity.class);
                     i.putExtra("game", seleccted_games);
                     i.putExtra("type", selected_types);
@@ -390,7 +390,7 @@ public class RegistrationActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.logout) {
             logout();
         }else if(item.getItemId() == R.id.calladmin){
-            onCall("9456001138");
+            onCall("9958099621");
         }
         return super.onOptionsItemSelected(item);
     }
