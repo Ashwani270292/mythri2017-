@@ -74,8 +74,23 @@
             android:label="Registration"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name="com.jss.jssatenmythri2017_18.activity.admin.RegisterCoordinator"
+            android:label="Registration"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.jss.jssatenmythri2017_18.activity.admin.ViewAllFixtures"
+            android:label="All Fixtures"
+            android:screenOrientation="portrait" />
+
         <activity android:name="com.jss.jssatenmythri2017_18.activity.coordinator.Coordinater_nav_activity"
             android:label="Coordinator"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name="com.jss.jssatenmythri2017_18.activity.admin.AdminActivity"
+            android:label="Admin"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"/>
 

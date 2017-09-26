@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.jss.jssatenmythri2017_18.R;
+import com.jss.jssatenmythri2017_18.activity.admin.AdminActivity;
 import com.jss.jssatenmythri2017_18.activity.coordinator.Coordinater_nav_activity;
 import com.jss.jssatenmythri2017_18.activity.registeration.Main_choice_Activity;
 import com.jss.jssatenmythri2017_18.helper.AccessServiceAPI;
@@ -191,6 +192,20 @@ public class LoginActivity extends Activity {
             progressDialog.dismiss();
             if (Common.RESULT_SUCCESS == result) {
                 Toast.makeText(getApplicationContext(), "Login success", Toast.LENGTH_LONG).show();
+
+                if(lid == 4){
+                    isloggedin = true;
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean(LOGIN_KEY, isloggedin);
+                    editor.putString(USERNAME, uname);
+                    editor.putString(MYTHRI_ID, id);
+                    editor.putString(IS_REGISTERATION, "admin");
+                    editor.apply();
+                    Intent i = new Intent(getApplicationContext(), AdminActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(i);
+                    finish();
+                }
                 if (lid == 1) {
 
                     isloggedin = true;
@@ -216,12 +231,13 @@ public class LoginActivity extends Activity {
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(i);
                     finish();
-                } else if (lid == 2) {
+                } else if (lid >= 60 && lid <= 72) {
                     isloggedin = true;
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean(LOGIN_KEY, isloggedin);
                     editor.putString(USERNAME, uname);
                     editor.putString(MYTHRI_ID, id);
+                    editor.putString("coordinatorType",Integer.toString(lid));
                     editor.putString(IS_REGISTERATION, "coordinator");
                     editor.apply();
                     Intent i = new Intent(getApplicationContext(), Coordinater_nav_activity.class);

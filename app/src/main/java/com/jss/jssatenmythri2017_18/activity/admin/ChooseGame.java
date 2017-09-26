@@ -1,4 +1,4 @@
-package com.jss.jssatenmythri2017_18.activity.coordinator;
+package com.jss.jssatenmythri2017_18.activity.admin;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,12 +15,16 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import com.jss.jssatenmythri2017_18.R;
-import com.jss.jssatenmythri2017_18.util.Common;
+import com.jss.jssatenmythri2017_18.activity.coordinator.SetFixtures;
+import com.jss.jssatenmythri2017_18.activity.coordinator.ViewFixtures;
+
+import static android.view.View.GONE;
 
 /**
- * Created by Ansh on 10/6/2016.
+ * Created by ashwa on 9/26/2017.
  */
-public class Your_Events extends Fragment {
+
+public class ChooseGame extends Fragment {
 
     SharedPreferences sharedPreferences;
     final String LOGIN_KEY = "logged_in";
@@ -46,6 +50,21 @@ public class Your_Events extends Fragment {
     };
 
 
+    String[] games = new String[]{
+            "Badminton",
+            "Table Tennis",
+            "Carrom",
+            "Tug Of War",
+            "Cricket",
+            "Football",
+            "Volleyball",
+            "Chess",
+            "Basketball",
+            "Shot Put",
+            "Athelitics",
+            "Kabaddi",
+            "Fun Games"
+    };
 
 
     String[] badminton_types = new String[]{
@@ -110,8 +129,6 @@ public class Your_Events extends Fragment {
             "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
     };
 
-
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -120,92 +137,17 @@ public class Your_Events extends Fragment {
     Button set, get;
     String gname;
 
-
-    String[] games = new String[]{
-            "Badminton",
-            "Table Tennis",
-            "Carrom",
-            "Tug Of War",
-            "Cricket",
-            "Football",
-            "Volleyball",
-            "Chess",
-            "Basketball",
-            "Shot Put",
-            "Athelitics",
-            "Kabaddi",
-            "Fun Games"
-    };
-
+    Spinner spinner_games;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_controller, container, false);
         sharedPreferences = getContext().getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        String coordinator = sharedPreferences.getString("coordinatorType", "60");
-        switch(coordinator) {
-            case Common.GAME_BADMINTON:
-                gname ="Badminton";
-                break;
-            case Common.GAME_ATHELITICS:
-                gname = "Athelitics";
-                break;
-            case Common.GAME_BASKETBALL:
-                gname = "Basketball";
-                break;
-            case Common.GAME_CARROM:
-                gname = "Carrom";
-                break;
-            case Common.GAME_SHOTPUT:
-                gname = "Shot Put";
-                break;
-            case Common.GAME_CHESS:
-                gname = "Chess";
-                break;
 
-            case Common.GAME_CRICKET:
-                gname = "Cricket";
-                break;
-            case Common.GAME_FOOTBALL:
-                gname = "Football";
-                break;
-            case Common.GAME_FUNGAMES:
-                gname = "Fun Games";
-                break;
-            case Common.GAME_VOLLEYBALL:
-                gname = "Volleyball";
-                break;
-            case Common.GAME_TOW:
-                gname = "Tug Of War";
-                break;
-            case Common.GAME_KABADDI:
-                gname = "Kabaddi";
-                break;
-            case Common.GAME_TT:
-                gname = "Table Tennis";
-                break;
-        }
         set = (Button) view.findViewById(R.id.setfixtures);
         get = (Button) view.findViewById(R.id.getfixtures);
 
-        set.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String g = String.valueOf(spinner_gender.getSelectedItem());
-                if(g.contains("Boy(s) & Girl(s)")){
-                    g = "none";
-                }
-
-                Intent intent = new Intent(getContext(), SetFixtures.class);
-                intent.putExtra("gname", gname);
-                intent.putExtra("gtype", String.valueOf(spinner_types.getSelectedItem()));
-
-                intent.putExtra("ggen",g);
-                intent.putExtra("round", String.valueOf(spinner_round.getSelectedItem()));
-                startActivity(intent);
-            }
-        });
+        set.setVisibility(GONE);
 
         get.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,7 +166,12 @@ public class Your_Events extends Fragment {
                 startActivity(intent);
             }
         });
-        // Inflate the layout for getContext() 
+        // Inflate the layout for getContext()
+
+        spinner_games = (Spinner) view.findViewById(R.id.spinner_games);
+        gamesAdapter = new ArrayAdapter(getActivity(), R.layout.spinner_item, games);
+        gamesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_games.setAdapter(gamesAdapter);
 
         spinner_round = (Spinner) view.findViewById(R.id.spinner_round);
         roundsadapter = new ArrayAdapter(getContext(), R.layout.spinner_item, rounds);
@@ -241,7 +188,72 @@ public class Your_Events extends Fragment {
         typesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner_types.setAdapter(typesAdapter);
 
-        switch (gname) {
+        spinner_games.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                gname = games[position];
+                updateOthers();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+        spinner_types.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String type = String.valueOf(spinner_types.getSelectedItem());
+
+                if (type.contains("Single") || type.equals("Doubles") || gname.contains("Athelitics")) {
+                    genderAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, gender_singles);
+                    genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_gender.setAdapter(genderAdapter);
+                } else if (type.contains("none") && gname.contains("Tug") ||
+                        gname.contains("Cricket")) {
+                    genderAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, gender_mixed);
+                    genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_gender.setAdapter(genderAdapter);
+                } else if (type.contains("none") && gname.contains("Football") ||
+                        gname.contains("Volleyball") ||
+                        gname.contains("Basketball") ||
+                        gname.contains("Chess") ||
+                        gname.contains("Shot Put")) {
+                    genderAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, gender_singles);
+                    genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_gender.setAdapter(genderAdapter);
+                } else if (type.contains("5 On 5") || type.contains("3 On 3")) {
+                    genderAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, gender_singles);
+                    genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_gender.setAdapter(genderAdapter);
+                } else if (type.contains("none")) {
+                    genderAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, gender);
+                    genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_gender.setAdapter(genderAdapter);
+                } else {
+                    genderAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, gender_mixed);
+                    genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner_gender.setAdapter(genderAdapter);
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+
+        return view;
+    }
+
+    public void updateOthers(){
+        switch (gname){
             case "Badminton":
                 typesAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, badminton_types); //just to show none in the beginning
                 typesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -308,56 +320,7 @@ public class Your_Events extends Fragment {
                 spinner_types.setAdapter(typesAdapter);
                 break;
         }
-           
-
-        spinner_types.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String type = String.valueOf(spinner_types.getSelectedItem());
-
-                if (type.contains("Single") || type.equals("Doubles") || gname.contains("Athelitics")) {
-                    genderAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, gender_singles);
-                    genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner_gender.setAdapter(genderAdapter);
-                } else if (type.contains("none") && gname.contains("Tug") ||
-                        gname.contains("Cricket")) {
-                    genderAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, gender_mixed);
-                    genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner_gender.setAdapter(genderAdapter);
-                } else if (type.contains("none") && gname.contains("Football") ||
-                        gname.contains("Volleyball") ||
-                        gname.contains("Basketball") ||
-                        gname.contains("Chess") ||
-                        gname.contains("Shot Put")) {
-                    genderAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, gender_singles);
-                    genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner_gender.setAdapter(genderAdapter);
-                } else if (type.contains("5 On 5") || type.contains("3 On 3")) {
-                    genderAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, gender_singles);
-                    genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner_gender.setAdapter(genderAdapter);
-                } else if (type.contains("none")) {
-                    genderAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, gender);
-                    genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner_gender.setAdapter(genderAdapter);
-                } else {
-                    genderAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, gender_mixed);
-                    genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner_gender.setAdapter(genderAdapter);
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-
-        return view;
     }
-
 
 }
 

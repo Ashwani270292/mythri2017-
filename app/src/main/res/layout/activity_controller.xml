@@ -20,6 +20,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="12dp"
+            android:text="Game"
+            android:textColor="#117751"
+            android:textSize="20sp" />
+
+        <Spinner
+            android:id="@+id/spinner_games"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/view_shape"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
             android:text="Types"
             android:textColor="#117751"
             android:textSize="20sp" />
